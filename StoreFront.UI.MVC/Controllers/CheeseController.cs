@@ -75,8 +75,8 @@ namespace StoreFront.UI.MVC.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", cheese.CategoryId);
             ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country", cheese.CountryId);
             ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageTypeId);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName", cheese.StatusId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "Address", cheese.SupplierId);
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusN", cheese.Status);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "Supplier", cheese.Supplier);
             return View(cheese);
         }
 
@@ -97,7 +97,7 @@ namespace StoreFront.UI.MVC.Controllers
             ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country", cheese.CountryId);
             ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageTypeId);
             ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName", cheese.StatusId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "Address", cheese.SupplierId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierName", "SupplierName", cheese.Supplier);
             return View(cheese);
         }
 
@@ -135,9 +135,9 @@ namespace StoreFront.UI.MVC.Controllers
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", cheese.CategoryId);
             ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country", cheese.CountryId);
-            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageTypeId);
+            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageType);
             ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName", cheese.StatusId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "Address", cheese.SupplierId);
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierName", "SupplierName", cheese.Supplier);
             return View(cheese);
         }
 

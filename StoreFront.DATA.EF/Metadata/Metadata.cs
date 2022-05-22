@@ -42,7 +42,7 @@ namespace StoreFront.DATA.EF.Models//Metadata
         public string QtyInStock { get; set; } = null!;
 
         [StringLength(10)]
-        [Display(Name = "Quantity in Stock")]
+        [Display(Name = "Quantity on Order")]
         public string? QtyOnOrder { get; set; }
 
         
@@ -73,6 +73,7 @@ namespace StoreFront.DATA.EF.Models//Metadata
         public int? OrderId { get; set; }
 
         [StringLength(75)]
+        [Display(Name = "Image")]
         public string? ProductImage { get; set; }
     }
     #endregion
