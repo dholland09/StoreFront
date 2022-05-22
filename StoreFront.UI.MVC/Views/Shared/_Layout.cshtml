@@ -64,7 +64,7 @@
                     <div class="col-lg-2 col-md-2 col-12">
                         <!-- Logo -->
                         <div class="logo">
-                            <a href="@Url.Action("Index", "Home")"><img src="~/images/logo.png" alt="logo"></a>
+                            <a href="@Url.Action("Index", "Home")"><img src="~/images/logo1.png" alt="logo"></a>
                         </div>
                         <!--/ End Logo -->
                         <!-- Search Form -->
@@ -92,7 +92,7 @@
                                     <option>kid’s item</option>
                                     </select>*@
                                 <form>
-                                    <input name="search" placeholder="Search Products Here....." type="search">
+                                    <input name="search" placeholder="Search Cheeses Here....." type="search">
                                     <button class="btnn"><i class="ti-search"></i></button>
                                 </form>
                             </div>
@@ -101,11 +101,9 @@
                     <div class="col-lg-2 col-md-3 col-12">
                         <div class="right-bar">
                             <!-- Search Form -->
+                           
                             <div class="sinlge-bar">
-                                <a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
-                            </div>
-                            <div class="sinlge-bar">
-                                <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                                <partial name="_LoginPartial" />
                             </div>
                             <div class="sinlge-bar shopping">
                                 <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
@@ -158,8 +156,7 @@
                                         <div class="nav-inner">
                                             <ul class="nav main-menu menu navbar-nav">
                                                 <li class="active"><a href="@Url.Action("Index", "Home")">Home</a></li>
-                                                <li><a href="@Url.Action("Index","Cheese")>Shop Products</a></li>
-
+                                                <li><a href="@Url.Action("Index","Cheese")">Shop Products</a></li> 
                                                 <li>
                                                     <a href="#">Admin<i class="ti-angle-down"></i></a>
                                                     <ul class="dropdown">
@@ -195,8 +192,8 @@
     
    
 
+    <div class="container">@RenderBody()</div>
     
-    @RenderBody()
     
 
 
@@ -256,7 +253,7 @@
                         <!-- Single Widget -->
                         <div class="single-footer about">
                             <div class="logo">
-                                <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                                <a href="@Url.Action("Index","Home")"><img src="~/images/logo3.png" alt="#"></a>
                             </div>
                             <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
                             <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>

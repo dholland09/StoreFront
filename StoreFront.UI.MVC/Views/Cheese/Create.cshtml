@@ -38,23 +38,23 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
+                <label asp-for="CountryId" class="control-label">Country of Origin</label>
                 <select asp-for="CountryId" class ="form-control" asp-items="ViewBag.CountryId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="SupplierId" class="control-label"></label>
-                <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.SupplierId"></select>
+                <label asp-for="SupplierId" class="control-label">Supplier</label>
+                <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.Supplier"></select>
             </div>
             <div class="form-group">
-                <label asp-for="PackageTypeId" class="control-label"></label>
-                <select asp-for="PackageTypeId" class ="form-control" asp-items="ViewBag.PackageTypeId"></select>
+                <label asp-for="PackageTypeId" class="control-label">Package Type</label>
+                <select asp-for="PackageTypeId" class ="form-control" asp-items="ViewBag.PackageType"></select>
             </div>
             <div class="form-group">
-                <label asp-for="StatusId" class="control-label"></label>
+                <label asp-for="StatusId" class="control-label">Status</label>
                 <select asp-for="StatusId" class ="form-control" asp-items="ViewBag.StatusId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
+                <label asp-for="CategoryId" class="control-label">Category</label>
                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
@@ -75,7 +75,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Cheeses</a>
 </div>
 
 @section Scripts {
