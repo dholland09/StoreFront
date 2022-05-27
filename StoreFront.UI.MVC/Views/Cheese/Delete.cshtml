@@ -1,12 +1,12 @@
 ﻿@model StoreFront.DATA.EF.Models.Cheese
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete " + Model.Name + "?";
 }
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this cheese?</h3>
+<h3 class="text-danger">Are you sure you want to delete this cheese?</h3>
 <div>
     
     <hr />
@@ -88,6 +88,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="CheeseId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Back to Cheeses</a>
     </form>
 </div>

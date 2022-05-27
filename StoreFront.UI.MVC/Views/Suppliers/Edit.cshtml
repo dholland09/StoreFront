@@ -1,11 +1,10 @@
 ﻿@model StoreFront.DATA.EF.Models.Supplier
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modify " + Model.SupplierName;
 }
 
-<h1>Edit Supplier</h1>
-
+<h1>@ViewData["Title"]</h1>
 
 <hr />
 <div class="row">

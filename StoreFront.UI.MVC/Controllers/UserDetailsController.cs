@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using StoreFront.DATA.EF.Models;
 
 namespace StoreFront.UI.MVC.Controllers
 {
+    
     public class UserDetailsController : Controller
     {
         private readonly StoreFrontContext _context;
@@ -19,6 +21,7 @@ namespace StoreFront.UI.MVC.Controllers
         }
 
         // GET: UserDetails
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
               return _context.UserDetails != null ? 
@@ -45,6 +48,7 @@ namespace StoreFront.UI.MVC.Controllers
         }
 
         // GET: UserDetails/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -67,6 +71,7 @@ namespace StoreFront.UI.MVC.Controllers
         }
 
         // GET: UserDetails/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.UserDetails == null)
@@ -87,6 +92,7 @@ namespace StoreFront.UI.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id, [Bind("UserId,FirstName,LastName,Address,City,State,Zip,Phone")] UserDetail userDetail)
         {
             if (id != userDetail.UserId)
@@ -118,6 +124,7 @@ namespace StoreFront.UI.MVC.Controllers
         }
 
         // GET: UserDetails/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.UserDetails == null)
@@ -138,6 +145,7 @@ namespace StoreFront.UI.MVC.Controllers
         // POST: UserDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.UserDetails == null)

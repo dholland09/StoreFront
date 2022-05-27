@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using StoreFront.DATA.EF.Models;
 
 namespace StoreFront.UI.MVC.Areas.Identity.Pages.Account
 {
@@ -79,6 +80,8 @@ namespace StoreFront.UI.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -97,6 +100,32 @@ namespace StoreFront.UI.MVC.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [StringLength(50, ErrorMessage = "Maximum 50 Characters")]
+            public string FirstName { get; set; } = null!;
+
+            [Required]
+            [StringLength(50, ErrorMessage = "Maximum 50 Characters")]
+
+            public string LastName { get; set; } = null!;
+            [StringLength(150, ErrorMessage = "Maximum 150 Characters")]
+
+            public string? Address { get; set; }
+            [StringLength(50, ErrorMessage = "Maximum 50 Characters")]
+
+            public string? City { get; set; }
+
+            [StringLength(2, ErrorMessage = "Maximum 2 Characters")]
+
+            public string? State { get; set; }
+
+            [StringLength(5, ErrorMessage = "Maximum 5 Characters")]
+
+            public string? Zip { get; set; }
+            [StringLength(24, ErrorMessage = "Maximum 24 Characters")]
+
+            public string? Phone { get; set; }
         }
 
 
@@ -123,6 +152,29 @@ namespace StoreFront.UI.MVC.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    #region Custom User Registration - Creating a new UserDetails record in the DB
+
+                    //This GadgetStoreContext object is what we use to save the new UserDetail record to the DB.
+                    //This is the same type of object that we use in our scaffolded Controllers.
+                    StoreFrontContext _context = new StoreFrontContext();
+                    //Instantiate the UserDetail object that will be saved to the DB
+                    UserDetail userDetail = new UserDetail()
+
+                    {
+                        UserId = userId,
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Address = Input.Address,
+                        City = Input.City,
+                        State = Input.State,
+                        Zip = Input.Zip,
+                        Phone = Input.Phone
+                    };
+
+                    _context.UserDetails.Add(userDetail);
+                    _context.SaveChanges(); 
+                    #endregion
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

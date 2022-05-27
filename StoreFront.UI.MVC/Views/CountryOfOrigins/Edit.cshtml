@@ -1,10 +1,10 @@
 ﻿@model StoreFront.DATA.EF.Models.CountryOfOrigin
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modify " + Model.Country;
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
 <h4>CountryOfOrigin</h4>
 <hr />
@@ -26,7 +26,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Countries</a>
 </div>
 
 @section Scripts {

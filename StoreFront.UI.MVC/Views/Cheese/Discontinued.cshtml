@@ -1,0 +1,113 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.Models.Cheese>
+
+@{
+    ViewData["Title"] = "Discontinued Cheeses";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<p>
+    <a asp-action="Index">Show Active Cheeses</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QtyInStock)
+            </th>
+           @* <th>
+                @Html.DisplayNameFor(model => model.QtyOnOrder)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+         @*   <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.ProductImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PackageType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QtyInStock)
+            </td>
+          @*  <td>
+                @Html.DisplayFor(modelItem => item.QtyOnOrder)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+          @*  <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>*@
+            <td>
+                @*@Html.DisplayFor(modelItem => item.ProductImage)*@
+                <img src="~/images/@item.ProductImage" class="img-fluid" alt="@item.Name"/> 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PackageType.PackageType1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+           @* <td>
+                @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CheeseId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CheeseId">Details</a> |
+                @if (item.OrderProducts.Count() == 0)
+                {
+                        <a asp-action="Delete" asp-route-id="@item.CheeseId">Delete</a>
+                    }
+                    else
+                    {
+                        <a disabled="disabled" class="text-danger text-decoration-line-through" title="Cannot delete this Cheese as it is referenced by an Order">Delete</a>
+                    }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

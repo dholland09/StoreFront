@@ -9,6 +9,7 @@ using StoreFront.DATA.EF.Models;
 
 namespace StoreFront.UI.MVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductStatusController : Controller
     {
         private readonly StoreFrontContext _context;

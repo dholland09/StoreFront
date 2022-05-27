@@ -1,12 +1,12 @@
 ﻿@model StoreFront.DATA.EF.Models.Supplier
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete " + Model.SupplierName;
 }
 
-<h1>Delete</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h3>Are you sure you want to delete this supplier?</h3>
+<h3 class="text-danger">Are you sure you want to delete this supplier?</h3>
 <div>
     
     <hr />

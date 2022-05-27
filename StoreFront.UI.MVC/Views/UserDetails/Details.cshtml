@@ -1,7 +1,7 @@
 ﻿@model StoreFront.DATA.EF.Models.UserDetail
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.FirstName + " " + Model.LastName + " Details";
 }
 
 <h1>Details</h1>
@@ -56,5 +56,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to User Details</a>
 </div>
