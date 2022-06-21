@@ -17,10 +17,12 @@ namespace StoreFront.UI.MVC.Controllers
     public class CheeseController : Controller
     {
         private readonly StoreFrontContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CheeseController(StoreFrontContext context)
+        public CheeseController(StoreFrontContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Cheese
@@ -116,9 +118,9 @@ namespace StoreFront.UI.MVC.Controllers
         {
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country");
-            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId");
+            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageType1");
             ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName");
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "Address");
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName");
             return View();
         }
 
@@ -128,19 +130,55 @@ namespace StoreFront.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("CheeseId,Name,Price,QtyInStock,QtyOnOrder,Description,CountryId,SupplierId,PackageTypeId,StatusId,CategoryId,OrderId,ProductImage")] Cheese cheese)
+        public async Task<IActionResult> Create([Bind("CheeseId,Name,Price,QtyInStock,QtyOnOrder,Description,CountryId,SupplierId,PackageTypeId,StatusId, StatusName,CategoryId,OrderId,ProductImage,Image")] Cheese cheese)
         {
             if (ModelState.IsValid)
             {
+                #region File Upload - CREATE
+                string oldImageName = "noimage.png";
+                if (cheese.Image != null)
+                {
+                    string ext = Path.GetExtension(cheese.Image.FileName);
+                    string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
+
+                    if (validExts.Contains(ext.ToLower()) && cheese.Image.Length < 4_194_303)
+                    {
+                        cheese.ProductImage = Guid.NewGuid() + ext;
+                        string webRootPath = _webHostEnvironment.WebRootPath;
+                        string fullImagePath = webRootPath + "/images/";
+
+                        //if (oldImageName != "noimage.png")
+                        //{
+                        //    ImageUtility.Delete(fullPath, oldImageName);
+                        //}
+
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await cheese.Image.CopyToAsync(memoryStream);
+                            using (var img = Image.FromStream(memoryStream))
+                            {
+                                int maxImageSize = 500;
+                                int maxThumbSize = 100;
+                                ImageUtility.ResizeImage(fullImagePath, cheese.ProductImage, img, maxImageSize, maxThumbSize);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    cheese.ProductImage = "noimage.png";
+                }
+
+                #endregion
                 _context.Add(cheese);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();                
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", cheese.CategoryId);
-            ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country", cheese.CountryId);
-            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageTypeId);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName", cheese.Status);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "Supplier", cheese.Supplier);
+            ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country");
+            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageType1");
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName");
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName");
             return View(cheese);
         }
 
@@ -159,10 +197,10 @@ namespace StoreFront.UI.MVC.Controllers
                 return NotFound();
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", cheese.CategoryId);
-            ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country", cheese.CountryId);
-            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageTypeId);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName", cheese.StatusId);
-            ViewData["SupplierName"] = new SelectList(_context.Suppliers, "SupplierName", "SupplierName", cheese.Supplier);
+            ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country");
+            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageType1");
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName");
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName");
             return View(cheese);
         }
 
@@ -172,7 +210,7 @@ namespace StoreFront.UI.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("CheeseId,Name,Price,QtyInStock,QtyOnOrder,Description,CountryId,SupplierName,PackageTypeId,StatusId,CategoryName,OrderId,ProductImage")] Cheese cheese)
+        public async Task<IActionResult> Edit(int id, [Bind("CheeseId,Name,Price,QtyInStock,QtyOnOrder,Description,CountryId,SupplierName,PackageTypeId,StatusId, StatusName, CategoryName,OrderId,ProductImage")] Cheese cheese)
         {
             if (id != cheese.CheeseId)
             {
@@ -243,10 +281,10 @@ namespace StoreFront.UI.MVC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", cheese.CategoryId);
-            ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country", cheese.CountryId);
-            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageTypeId", cheese.PackageType);
-            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName", cheese.StatusId);
-            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierName", "SupplierName", cheese.Supplier);
+            ViewData["CountryId"] = new SelectList(_context.CountryOfOrigins, "CountryId", "Country");
+            ViewData["PackageTypeId"] = new SelectList(_context.PackageTypes, "PackageTypeId", "PackageType1");
+            ViewData["StatusId"] = new SelectList(_context.ProductStatuses, "StatusId", "StatusName");
+            ViewData["SupplierId"] = new SelectList(_context.Suppliers, "SupplierId", "SupplierName");
             return View(cheese);
         }
 

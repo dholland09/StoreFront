@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -43,11 +43,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="SupplierId" class="control-label">Supplier</label>
-                <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.Supplier"></select>
+                <select asp-for="SupplierId" class ="form-control" asp-items="ViewBag.SupplierId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PackageTypeId" class="control-label">Package Type</label>
-                <select asp-for="PackageTypeId" class ="form-control" asp-items="ViewBag.PackageType"></select>
+                <select asp-for="PackageTypeId" class ="form-control" asp-items="ViewBag.PackageTypeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="StatusId" class="control-label">Status</label>
@@ -57,14 +57,15 @@
                 <label asp-for="CategoryId" class="control-label">Category</label>
                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="OrderId" class="control-label"></label>
                 <input asp-for="OrderId" class="form-control" />
                 <span asp-validation-for="OrderId" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="ProductImage" class="control-label"></label>
-                <input asp-for="ProductImage" class="form-control" />
+                <input type="file" asp-for="Image" class="form-control" />
+                @*<input asp-for="ProductImage" class="form-control" />*@
                 <span asp-validation-for="ProductImage" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -8,7 +8,7 @@
     <div class="container">
         <div class="heading_container heading_center">
             <h2>
-                Shop <span>Gadgets</span>
+                Shop <span>Cheeses</span>
             </h2>
 
             <p align="center">
@@ -93,7 +93,7 @@
                     </td>*@
                         <td>
                             @*@Html.DisplayFor(modelItem => item.ProductImage)*@
-                            <img src="~/images/@t_item.ProductImage" class="img-fluid" alt="@item.Name" />
+                            <img src="~/images/t_@item.ProductImage" class="img-fluid" alt="@item.Name" />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Category.CategoryName)

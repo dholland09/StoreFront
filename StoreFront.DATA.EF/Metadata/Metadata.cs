@@ -46,7 +46,7 @@ namespace StoreFront.DATA.EF.Models//Metadata
         public string? QtyOnOrder { get; set; }
 
         
-        [StringLength(150)]
+        [StringLength(500)]
         public string? Description { get; set; }
 
         [Required]

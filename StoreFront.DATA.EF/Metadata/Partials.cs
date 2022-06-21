@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +16,10 @@ namespace StoreFront.DATA.EF.Models//Metadata
 
     #region Cheese
     [ModelMetadataType(typeof(CheeseMetadata))]
-    public partial class Cheese { }
+    public partial class Cheese {
+        [NotMapped]
+        public IFormFile Image { get; set; }
+    }
 
     #endregion
 
