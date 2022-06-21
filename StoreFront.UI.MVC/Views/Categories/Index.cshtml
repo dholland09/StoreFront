@@ -4,12 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New Category</a>
+    <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<div class="row">
+    <div class="offset-3 col-md-6">
+        <div id="MessageContent" class="text-center">
+
+        </div>
+    </div>
+</div>
+
+
+<table class="table" id="CategoriesTable">
     <thead>
         <tr>
             <th>
@@ -20,16 +30,43 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr id="Category-@item.CategoryId">
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                @*<a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |*@
+                <a href="" class="DetailsLink" id="@item.CategoryId">Details</a>
+
+                @*<a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>*@
+                <a data-ajax="true" data-ajax-confirm="Are you sure you want to delete @item.CategoryName?"
+                data-ajax-failure="deleteFailed" data-ajax-success="deleteConfirmed" data-ajax-method="POST"
+                href="~/Categories/AjaxDelete/@item.CategoryId">
+                    Delete
+                </a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+
+
+@section Scripts{
+    <script>
+        //************************* AJAX DELETE ***************************/
+function deleteConfirmed(response, status, data) {
+    let rowId = "#Category-" + response.id;
+    $("#CategoriesTable").find(rowId).remove();
+
+    $("#MessageContext").html("<div class='alert alert-success'>" + response.message + "</div>");
+}
+
+function deleteFailed(response, status, data) {
+    $("#MessageContent").html("<div class='alert alert-danger'>Delete unsuccessful.</div>");
+}
+
+    </script>
+}

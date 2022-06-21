@@ -11,7 +11,7 @@ namespace StoreFront.DATA.EF.Models
         public short? Quantity { get; set; }
         public decimal? Price { get; set; }
 
-        public virtual Cheese Cheese { get; set; } = null!;
-        public virtual Order Order { get; set; } = null!;
+        public virtual Cheese? Cheese { get; set; } 
+        public virtual Order? Order { get; set; }
     }
 }

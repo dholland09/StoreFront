@@ -25,10 +25,10 @@ namespace StoreFront.DATA.EF.Models
         public string? ProductImage { get; set; }
 
         public virtual Category? Category { get; set; }
-        public virtual CountryOfOrigin Country { get; set; } = null!;
-        public virtual PackageType PackageType { get; set; } = null!;
-        public virtual ProductStatus Status { get; set; } = null!;
-        public virtual Supplier Supplier { get; set; } = null!;
+        public virtual CountryOfOrigin? Country { get; set; } 
+        public virtual PackageType? PackageType { get; set; }
+        public virtual ProductStatus? Status { get; set; } 
+        public virtual Supplier? Supplier { get; set; } 
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }
